@@ -15,41 +15,52 @@ body {
   color: #665a4e;
 }
 
-/* ==================================================
-   COVER DEPAN
-================================================== */
+/* =========================
+   COVER
+========================= */
 
 .cover {
+  position: relative;
   min-height: 100vh;
   min-height: 100svh;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   padding: 20px;
+  overflow: hidden;
 
-  background:
-    radial-gradient(
-      circle at 20% 20%,
-      #fffdf8 0%,
-      transparent 35%
+  background-color: #3b302b;
+  background-image:
+    linear-gradient(
+      rgba(35, 25, 20, 0.28),
+      rgba(35, 25, 20, 0.45)
     ),
-    radial-gradient(
-      circle at 80% 80%,
-      #d8c5a9 0%,
-      transparent 40%
-    ),
-    #eee4d5;
+    url("/foto-mempelai.jpeg");
+
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(25, 18, 15, 0.12),
+    rgba(25, 18, 15, 0.35)
+  );
+  pointer-events: none;
 }
 
 .cover-card {
   position: relative;
-
+  z-index: 2;
   width: 100%;
-  max-width: 480px;
-
-  min-height: 720px;
+  max-width: 650px;
+  min-height: 100vh;
+  min-height: 100svh;
 
   display: flex;
   flex-direction: column;
@@ -57,188 +68,118 @@ body {
   align-items: center;
 
   text-align: center;
+  padding: 50px 25px;
 
-  padding: 45px 30px;
-
-  background: rgba(255, 255, 255, 0.78);
-
-  border: 1px solid #a99578;
-  border-radius: 24px;
-
-  box-shadow:
-    0 25px 70px rgba(65, 50, 35, 0.18);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 
   overflow: hidden;
-
   animation: coverFade 1.2s ease;
 }
 
 .cover-card::before {
   content: "❦";
-
   position: absolute;
-
-  top: 25px;
+  top: 30px;
   left: 25px;
-
   font-size: 35px;
-
-  color: #a99578;
-  opacity: 0.7;
+  color: rgba(255, 255, 255, 0.75);
+  opacity: 0.8;
 }
 
 .cover-card::after {
   content: "❦";
-
   position: absolute;
-
-  bottom: 25px;
+  bottom: 30px;
   right: 25px;
-
   font-size: 35px;
-
-  color: #a99578;
-  opacity: 0.7;
-
+  color: rgba(255, 255, 255, 0.75);
+  opacity: 0.8;
   transform: rotate(180deg);
 }
 
 .cover-card .small-title {
   margin: 0 0 18px;
-
   font-size: 12px;
-
   letter-spacing: 5px;
-
-  color: #8a7760;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .cover-card h1 {
   margin: 10px 0 28px;
-
-  font-family: Georgia, "Times New Roman", serif;
-
-  font-size: 42px;
-
+  font-family: "Great Vibes", "Brush Script MT", cursive;
+  font-size: clamp(48px, 8vw, 72px);
   font-weight: 400;
-
-  letter-spacing: 2px;
-
-  color: #4d4035;
+  line-height: 1.05;
+  color: white;
+  text-shadow: 0 3px 15px rgba(0, 0, 0, 0.55);
 }
-
-/* FOTO COVER */
 
 .cover-photo {
-  width: 210px;
-  height: 210px;
-
-  object-fit: cover;
-
-  border-radius: 50%;
-
-  padding: 7px;
-
-  margin-bottom: 25px;
-
-  background: #f7f1e8;
-
-  border: 1px solid #a99578;
-
-  box-shadow:
-    0 10px 35px rgba(70, 50, 30, 0.15);
+  display: none;
 }
-
-/* TAMU */
 
 .guest-label {
   margin: 10px 0 5px;
-
   font-size: 13px;
-
   letter-spacing: 2px;
-
-  color: #8a7760;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
 }
 
 .guest-name {
   margin: 5px 0 25px;
-
   font-family: Georgia, serif;
-
   font-size: 25px;
-
-  color: #4d4035;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .cover-card .date {
   margin: 0 0 20px;
-
   font-size: 13px;
-
   letter-spacing: 3px;
-
-  color: #8a7760;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .cover-card .line {
   width: 70px;
   height: 1px;
-
   margin: 0 auto 25px;
-
-  background: #b6a185;
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .invitation-text {
   margin: 0 0 30px;
-
   font-size: 14px;
-
   line-height: 1.8;
-
-  color: #6c5c4b;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
 }
-
-/* TOMBOL */
 
 .cover-card button {
   margin-top: 10px;
-
   padding: 14px 30px;
-
-  border: 1px solid rgba(255, 255, 255, 0.4);
-
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 30px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #6f5a4a,
-      #8b7462
-    );
-
+  background: rgba(150, 100, 75, 0.9);
   color: white;
-
   font-family: Georgia, serif;
-
   font-size: 12px;
-
   letter-spacing: 2px;
-
   cursor: pointer;
-
-  box-shadow:
-    0 8px 25px rgba(111, 90, 74, 0.25);
-
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
   transition: 0.3s ease;
 }
 
 .cover-card button:hover {
   transform: translateY(-3px);
-
-  box-shadow:
-    0 12px 30px rgba(111, 90, 74, 0.35);
+  background: rgba(130, 85, 65, 0.95);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
 }
 
 @keyframes coverFade {
@@ -253,23 +194,18 @@ body {
   }
 }
 
-/* ==================================================
-   ISI UNDANGAN
-================================================== */
+
+/* =========================
+   CONTENT
+========================= */
 
 .content {
   position: relative;
-
   min-height: 100vh;
-
   background: #f7f1e8;
-
   text-align: center;
-
   color: #665a4e;
-
   overflow: hidden;
-
   animation: invitationOpen 1.2s ease both;
 }
 
@@ -285,40 +221,24 @@ body {
   }
 }
 
-/* ==================================================
-   FULL SCREEN SECTION
-================================================== */
-
 .full-screen-section {
   min-height: 100vh;
   min-height: 100svh;
-
   width: 100%;
 
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   justify-content: center;
 
   text-align: center;
-
   padding: 60px 20px;
-
   position: relative;
 }
 
-/* ==================================================
-   ANIMASI SCROLL
-================================================== */
-
 .full-screen-section.animate-on-scroll {
   opacity: 0;
-
   transform: translateY(35px);
-
   transition:
     opacity 0.9s ease,
     transform 0.9s ease;
@@ -326,27 +246,21 @@ body {
 
 .full-screen-section.animate-on-scroll.show {
   opacity: 1;
-
   transform: translateY(0);
 }
 
-/* ==================================================
-   FLOATING FLOWERS
-================================================== */
+
+/* =========================
+   FLOWERS
+========================= */
 
 .floating-flower {
   position: fixed;
-
   z-index: 0;
-
   pointer-events: none;
-
   opacity: 0.14;
-
   font-size: 32px;
-
-  animation:
-    floatingFlower 8s ease-in-out infinite;
+  animation: floatingFlower 8s ease-in-out infinite;
 }
 
 .flower-1 {
@@ -357,33 +271,27 @@ body {
 .flower-2 {
   top: 35%;
   right: 6%;
-
   font-size: 25px;
-
   animation-delay: 2s;
 }
 
 .flower-3 {
   top: 65%;
   left: 8%;
-
   font-size: 28px;
-
   animation-delay: 4s;
 }
 
 .flower-4 {
   top: 80%;
   right: 8%;
-
   font-size: 35px;
-
   animation-delay: 6s;
 }
 
 @keyframes floatingFlower {
   0% {
-    transform: translateY(0) rotate(0deg);
+    transform: translateY(0) rotate(0);
   }
 
   50% {
@@ -391,13 +299,14 @@ body {
   }
 
   100% {
-    transform: translateY(0) rotate(0deg);
+    transform: translateY(0) rotate(0);
   }
 }
 
-/* ==================================================
-   INTRO - R & S + NAMA
-================================================== */
+
+/* =========================
+   INTRO
+========================= */
 
 .intro-section {
   background:
@@ -410,107 +319,67 @@ body {
 
 .intro-card {
   width: min(92%, 600px);
-
   text-align: center;
-
   padding: 20px;
 }
 
-/* R & S */
-
 .intro-card .initials {
   font-family: "Great Vibes", "Brush Script MT", cursive;
-
   font-size: 78px;
-
   font-weight: 400;
-
-  letter-spacing: 0;
-
   line-height: 1;
-
   color: #806b52;
-
   margin-bottom: 28px;
 }
 
 .intro-card .initials span {
   font-family: "Great Vibes", "Brush Script MT", cursive;
-
   font-size: 58px;
-
   color: #a99578;
-
   margin: 0 2px;
 }
 
-/* NAMA */
-
 .intro-card .intro-names {
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   gap: 8px;
-
   color: #665544;
 }
 
 .intro-card .intro-names > div {
   width: 44%;
-
   text-align: center;
 }
 
 .intro-card .intro-names p {
   margin: 0;
-
-  font-family:
-    "Great Vibes",
-    "Brush Script MT",
-    cursive;
-
+  font-family: "Great Vibes", "Brush Script MT", cursive;
   font-size: 28px;
-
   line-height: 1.35;
-
   font-weight: 400;
-
   color: #6f5a4a;
 }
 
 .intro-card .intro-names > span {
   font-family: "Great Vibes", cursive;
-
   color: #a99578;
-
   font-size: 35px;
-
   flex-shrink: 0;
 }
 
-/* TANGGAL */
-
 .intro-card .intro-date {
   margin-top: 28px;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 14px;
-
   letter-spacing: 2px;
-
   color: #9a846c;
 }
 
-/* ==================================================
-   DOA
-================================================== */
+
+/* =========================
+   AYAT
+========================= */
 
 .wedding-verse-section {
   background:
@@ -523,116 +392,72 @@ body {
 
 .wedding-verse {
   position: relative;
-
   width: min(90%, 650px);
-
   padding: 55px 35px;
-
   text-align: center;
-
-  background:
-    rgba(255, 255, 255, 0.4);
-
+  background: rgba(255, 255, 255, 0.4);
   border: 1px solid #cdbda7;
-
-  box-shadow:
-    0 15px 40px rgba(70, 50, 30, 0.08);
+  box-shadow: 0 15px 40px rgba(70, 50, 30, 0.08);
 }
 
 .wedding-verse::before {
   content: "";
-
   position: absolute;
-
   top: 10px;
   left: 10px;
   right: 10px;
   bottom: 10px;
-
   border: 1px solid rgba(169, 149, 120, 0.4);
-
   pointer-events: none;
 }
 
 .wedding-verse::after {
   content: "❦";
-
   position: absolute;
-
   top: -17px;
-
   left: 50%;
-
   transform: translateX(-50%);
-
   padding: 0 15px;
-
   background: #f7f1e8;
-
   color: #a99578;
-
   font-size: 24px;
 }
 
 .verse-divider {
   position: relative;
-
   z-index: 2;
-
   margin-bottom: 25px;
-
   color: #a99578;
-
   font-size: 30px;
 }
 
 .verse-text {
   position: relative;
-
   z-index: 2;
-
   margin: 0 auto 25px;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 18px;
-
   line-height: 2;
-
   font-style: italic;
-
   color: #6f5a4a;
 }
 
 .verse-reference {
   position: relative;
-
   z-index: 2;
-
   display: block;
-
   margin-top: 20px;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 14px;
-
   font-style: italic;
-
   letter-spacing: 1px;
-
   color: #a99578;
 }
 
-/* ==================================================
-   FOTO MEMPELAI
-================================================== */
+
+/* =========================
+   COUPLE
+========================= */
 
 .couple-section {
   gap: 5px;
@@ -640,32 +465,20 @@ body {
 
 .couple-section .small-title {
   margin-bottom: 15px;
-
   font-size: 12px;
-
   letter-spacing: 5px;
-
   color: #8a7760;
 }
 
 .couple-photo {
   width: min(72vw, 300px);
-
   height: min(82vw, 390px);
-
   object-fit: cover;
-
   margin: 15px auto 20px;
-
   border: 5px solid #f7f1e8;
-
   outline: 1px solid #a99578;
-
   border-radius: 12px;
-
-  box-shadow:
-    0 15px 40px rgba(70, 50, 30, 0.18);
-
+  box-shadow: 0 15px 40px rgba(70, 50, 30, 0.18);
   transition: 0.8s ease;
 }
 
@@ -675,36 +488,44 @@ body {
 
 .couple-section h1 {
   max-width: 90%;
-
   margin: 5px auto 8px;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 34px;
-
   font-weight: 500;
-
   line-height: 1.3;
-
   letter-spacing: 1px;
-
   color: #5f4b3a;
 }
 
 .couple-section p {
   max-width: 90%;
-
   line-height: 1.8;
-
   color: #6f6256;
 }
 
-/* ==================================================
-   COUPLE TOGETHER
-================================================== */
+
+/* =========================
+   AMPERSAND
+========================= */
+
+.ampersand-between {
+  height: 0;
+  min-height: 0;
+  position: relative;
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ampersand-between .and {
+  margin: 0;
+  transform: translateY(-50%);
+  font-family: "Great Vibes", "Brush Script MT", cursive;
+  font-size: 60px;
+  color: #a99578;
+}
 
 .couple-together {
   gap: 15px;
@@ -712,157 +533,206 @@ body {
 
 .couple-together .and {
   font-size: 60px;
-
   color: #a99578;
 }
 
 .couple-together p {
   line-height: 1.9;
-
   color: #6f6256;
 }
 
 .wedding-date {
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 21px;
-
   letter-spacing: 1px;
-
   color: #5f4b3a;
 }
 
-/* ==================================================
+
+/* =====================================================
    COUNTDOWN
-================================================== */
+===================================================== */
+
+.countdown-background {
+  position: relative;
+  overflow: hidden;
+
+  background-image:
+    linear-gradient(
+      rgba(35, 25, 20, 0.45),
+      rgba(35, 25, 20, 0.55)
+    ),
+    url("/foto1.jpeg");
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.countdown-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    rgba(35, 25, 20, 0.15),
+    rgba(35, 25, 20, 0.25)
+  );
+
+  pointer-events: none;
+}
+
+.countdown-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* TEKS COUNTDOWN — LEBIH KE ATAS */
+
+.countdown-subtitle {
+  position: relative;
+  top: -150px;
+
+  margin: 0 0 8px;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.4;
+
+  color: white;
+
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
 
 .countdown h2 {
-  margin: 0 0 30px;
+  position: relative;
+  top: -150px;
 
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
+  margin: 0;
 
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 28px;
-
   font-weight: 500;
+  line-height: 1.2;
 
-  color: #5f4b3a;
+  color: white;
+
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
+
+.countdown-date {
+  position: relative !important;
+  top: -150px !important;
+
+  margin: 10px 0 0 !important;
+  padding: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  text-align: center;
+
+  color: white;
+
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+/* KOTAK COUNTDOWN — LEBIH KE BAWAH */
 
 .countdown-grid {
   width: 100%;
-
   max-width: 550px;
 
   display: grid;
-
-  grid-template-columns:
-    repeat(4, 1fr);
-
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+
+  position: relative;
+  top: 160px;
+
+  margin-top: 0;
 }
 
 .countdown-grid > div {
   padding: 18px 10px;
 
-  background:
-    rgba(255, 255, 255, 0.75);
-
+  background: rgba(255, 255, 255, 0.85);
   border: 1px solid #d8c9b5;
-
   border-radius: 14px;
 
-  box-shadow:
-    0 8px 25px rgba(70, 50, 30, 0.08);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .countdown-grid strong {
   display: block;
-
   font-size: 30px;
-
   font-weight: 500;
-
   color: #5f4b3a;
 }
 
 .countdown-grid span {
   display: block;
-
   margin-top: 6px;
-
   font-size: 10px;
-
   letter-spacing: 1.5px;
-
   color: #9a846c;
 }
 
-/* ==================================================
-   ACARA
-================================================== */
+
+/* =========================
+   EVENT
+========================= */
 
 .event {
   width: min(92%, 650px);
-
   padding: 42px 25px;
-
   margin-left: auto;
   margin-right: auto;
 
-  background:
-    rgba(255, 255, 255, 0.72);
-
+  background: rgba(255, 255, 255, 0.72);
   border: 1px solid #d8c9b5;
-
   border-radius: 20px;
 
-  box-shadow:
-    0 15px 40px rgba(70, 50, 30, 0.09);
+  box-shadow: 0 15px 40px rgba(70, 50, 30, 0.09);
 
   text-align: center;
 }
 
 .event h2 {
   margin: 0 0 22px;
-
   font-size: 29px;
-
   font-weight: 500;
-
   color: #5f4b3a;
 }
 
 .event p {
   line-height: 1.8;
-
   color: #6f6256;
 }
 
 .event a {
   display: inline-block;
-
   margin-top: 18px;
-
   padding: 12px 24px;
 
   border: 1px solid #a99578;
-
   border-radius: 30px;
 
   background: transparent;
-
   color: #6f5a4a;
 
   text-decoration: none;
-
   font-size: 12px;
-
   letter-spacing: 1.5px;
 
   transition: 0.3s ease;
@@ -870,212 +740,260 @@ body {
 
 .event a:hover {
   background: #6f5a4a;
-
   color: white;
-
   transform: translateY(-2px);
 }
 
-/* ==================================================
-   GALLERY
-================================================== */
 
-.gallery {
-  text-align: center;
-}
-
-.gallery h2 {
-  width: 100%;
-
-  margin: 0 0 30px;
-
-  font-size: 29px;
-
-  font-weight: 500;
-
-  color: #5f4b3a;
-
-  text-align: center;
-}
-
-.gallery-grid {
-  width: 100%;
-
-  max-width: 650px;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 18px;
-
-  margin: 0 auto;
-}
-
-.gallery-grid img {
-  width: 100%;
-
-  height: 220px;
-
-  object-fit: cover;
-
-  border: 4px solid white;
-
-  border-radius: 16px;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 10px 30px rgba(70, 50, 30, 0.15);
-
-  transition: 0.35s ease;
-}
-
-.gallery-grid img:hover {
-  transform: translateY(-5px) scale(1.02);
-
-  box-shadow:
-    0 18px 40px rgba(70, 50, 30, 0.22);
-}
-
-/* ==================================================
+/* =========================
    RSVP
-================================================== */
+========================= */
 
 .rsvp {
-  width: min(92%, 650px);
+  width: 100%;
+  text-align: center;
+}
 
+.rsvp-card {
+  width: min(92%, 600px);
   padding: 45px 25px;
 
-  margin-left: auto;
-  margin-right: auto;
-
-  background:
-    rgba(255, 255, 255, 0.45);
-
+  background: rgba(255, 255, 255, 0.55);
   border: 1px solid #d8c9b5;
+  border-radius: 24px;
 
-  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(70, 50, 30, 0.09);
 
   text-align: center;
 }
 
-.rsvp h2 {
-  margin: 0 0 20px;
+.rsvp-small-title {
+  margin: 0 0 15px;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: #9a846c;
+}
 
-  font-size: 28px;
+.rsvp-card h2 {
+  margin: 0 0 30px;
+  font-family: "Great Vibes", "Brush Script MT", cursive;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #6f5a4a;
+}
 
-  font-weight: 500;
+.guest-message-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
 
+.guest-message-form input,
+.guest-message-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+
+  border: 1px solid #d8c9b5;
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.8);
   color: #5f4b3a;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+
+  outline: none;
 }
 
-.rsvp p {
-  line-height: 1.8;
+.guest-message-form input:focus,
+.guest-message-form textarea:focus {
+  border-color: #a99578;
+  box-shadow: 0 0 0 2px rgba(169, 149, 120, 0.12);
 }
 
-.rsvp a {
-  display: inline-block;
+.guest-message-form textarea {
+  resize: vertical;
+  min-height: 110px;
+}
 
-  margin-top: 18px;
+.guest-message-form input::placeholder,
+.guest-message-form textarea::placeholder {
+  color: #a99a89;
+}
 
-  padding: 14px 30px;
+.guest-message-form button {
+  margin-top: 5px;
+  padding: 14px 25px;
 
+  border: none;
   border-radius: 30px;
 
   background: #75634f;
-
   color: white;
 
-  text-decoration: none;
-
+  font-family: Georgia, serif;
   font-size: 12px;
+  letter-spacing: 1.5px;
 
-  letter-spacing: 1px;
+  cursor: pointer;
 
-  box-shadow:
-    0 6px 18px rgba(80, 65, 50, 0.15);
+  box-shadow: 0 6px 18px rgba(80, 65, 50, 0.15);
 
   transition: 0.3s ease;
 }
 
-.rsvp a:hover {
-  transform: translateY(-3px);
+.guest-message-form button:hover {
+  transform: translateY(-2px);
+  background: #665544;
 }
 
-/* ==================================================
-   CLOSING
-================================================== */
+.guest-messages {
+  margin-top: 40px;
+  text-align: left;
+}
 
-.closing {
+.guest-messages h3 {
+  margin: 0 0 20px;
   text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  color: #6f5a4a;
 }
 
-.closing p,
-.closing h2 {
+.no-message {
+  text-align: center;
+  font-size: 13px;
+  color: #9a846c;
+}
+
+.guest-message {
+  margin-bottom: 14px;
+  padding: 17px 18px;
+
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #e0d3c1;
+  border-radius: 14px;
+
+  box-shadow: 0 6px 18px rgba(70, 50, 30, 0.05);
+}
+
+.guest-message strong {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 15px;
+  color: #5f4b3a;
+}
+
+.guest-message p {
+  margin: 0;
+  line-height: 1.7;
+  font-size: 14px;
+  color: #6f6256;
+}
+
+
+/* =========================
+   CLOSING
+========================= */
+
+.closing-background {
+  position: relative;
+  overflow: hidden;
+
+  background-image:
+    linear-gradient(
+      rgba(35, 25, 20, 0.45),
+      rgba(35, 25, 20, 0.55)
+    ),
+    url("/foto2.jpeg");
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.closing-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    rgba(25, 18, 15, 0.12),
+    rgba(25, 18, 15, 0.3)
+  );
+
+  pointer-events: none;
+}
+
+.closing-content {
+  position: relative;
+  z-index: 2;
   width: 100%;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  color: white;
+
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+
+.closing-content p,
+.closing-content h2 {
+  width: 100%;
   text-align: center;
 }
 
-.closing p {
+.closing-content p {
   line-height: 1.8;
 }
 
-.closing h2 {
+.closing-content h2 {
   margin: 25px 0 10px;
 
   font-size: 34px;
-
   font-weight: 400;
-
   line-height: 1.7;
-
   letter-spacing: 1px;
 
-  color: #5f4b3a;
+  color: white;
 }
 
 .closing-date {
   margin-top: 15px;
-
   font-size: 13px;
-
   letter-spacing: 2px;
-
-  color: #756858;
+  color: white;
 }
 
-/* ==================================================
-   MUSIK
-================================================== */
+
+/* =========================
+   MUSIC BUTTON
+========================= */
 
 .music-button {
   position: fixed;
-
   right: 20px;
   bottom: 20px;
-
   z-index: 1000;
 
   width: 50px;
   height: 50px;
 
   border: 1px solid #b8a994;
-
   border-radius: 50%;
 
   background: #f7f1e8;
-
   color: #6f6255;
 
   font-size: 22px;
-
   cursor: pointer;
 
-  box-shadow:
-    0 5px 15px rgba(80, 65, 50, 0.15);
+  box-shadow: 0 5px 15px rgba(80, 65, 50, 0.15);
 
   transition: 0.3s ease;
 }
@@ -1084,106 +1002,70 @@ body {
   transform: scale(1.08) rotate(8deg);
 }
 
-/* ==================================================
-   PHOTO LIGHTBOX
-================================================== */
 
-.photo-lightbox {
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 2000;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  padding: 25px;
-
-  background:
-    rgba(35, 28, 23, 0.88);
-
-  backdrop-filter: blur(8px);
-}
-
-.photo-lightbox img {
-  max-width: 92%;
-
-  max-height: 88vh;
-
-  object-fit: contain;
-
-  border-radius: 12px;
-
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.35);
-}
-
-.close-photo {
-  position: absolute;
-
-  top: 20px;
-  right: 20px;
-
-  width: 42px;
-  height: 42px;
-
-  border: none;
-
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, 0.9);
-
-  color: #4b4038;
-
-  font-size: 18px;
-
-  cursor: pointer;
-}
-
-/* ==================================================
-   MOBILE
-================================================== */
+/* =====================================================
+   MOBILE / HP
+===================================================== */
 
 @media (max-width: 600px) {
 
   .cover {
-    padding: 15px;
+    min-height: 100svh;
+    padding: 0;
+
+    background-size: cover;
+    background-position: center center;
   }
 
   .cover-card {
-    min-height: 650px;
-
+    width: 100%;
+    min-height: 100svh;
     padding: 40px 20px;
   }
 
   .cover-card h1 {
-    font-size: 34px;
+    font-size: 50px;
+    line-height: 1.05;
+    margin-bottom: 25px;
   }
 
-  .cover-photo {
-    width: 180px;
-    height: 180px;
+  .cover-card .small-title {
+    font-size: 10px;
+    letter-spacing: 4px;
+  }
+
+  .guest-label {
+    font-size: 12px;
   }
 
   .guest-name {
-    font-size: 20px;
+    font-size: 21px;
+    margin-bottom: 20px;
   }
+
+  .cover-card .date {
+    font-size: 12px;
+  }
+
+  .invitation-text {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .cover-card button {
+    padding: 13px 28px;
+  }
+
 
   /* INTRO */
 
   .intro-card .initials {
     font-size: 70px;
-
     margin-bottom: 25px;
   }
 
   .intro-card .initials span {
     font-size: 50px;
-
     margin: 0 1px;
   }
 
@@ -1197,7 +1079,6 @@ body {
 
   .intro-card .intro-names p {
     font-size: 23px;
-
     line-height: 1.35;
   }
 
@@ -1207,31 +1088,28 @@ body {
 
   .intro-card .intro-date {
     margin-top: 25px;
-
     font-size: 13px;
   }
 
-  /* DOA */
+
+  /* AYAT */
 
   .wedding-verse {
     width: 92%;
-
     padding: 45px 22px;
   }
 
   .verse-text {
     font-size: 16px;
-
     line-height: 1.9;
   }
 
-  /* FOTO */
+
+  /* COUPLE */
 
   .couple-section .couple-photo {
     width: 68vw;
-
     height: 82vw;
-
     max-height: 380px;
   }
 
@@ -1243,10 +1121,44 @@ body {
     font-size: 14px;
   }
 
-  /* COUNTDOWN */
+
+  /* AMPERSAND */
+
+  .ampersand-between .and {
+    font-size: 55px;
+  }
+
+
+  /* =================================================
+     COUNTDOWN HP
+  ================================================= */
+
+  .countdown-content {
+    position: relative;
+  }
+
+  .countdown-subtitle {
+    top: -160px;
+    font-size: 15px;
+    margin-bottom: 7px;
+  }
+
+  .countdown h2 {
+    top: -160px;
+    font-size: 25px;
+    line-height: 1.2;
+  }
+
+  .countdown-date {
+    top: -160px !important;
+    font-size: 16px;
+    margin-top: 9px !important;
+  }
 
   .countdown-grid {
+    top: 170px;
     gap: 5px;
+    margin-top: 0;
   }
 
   .countdown-grid > div {
@@ -1259,11 +1171,15 @@ body {
 
   .countdown-grid span {
     font-size: 8px;
-
     letter-spacing: 1px;
   }
 
-  /* ACARA */
+  .countdown-background {
+    background-position: center center;
+  }
+
+
+  /* EVENT */
 
   .event {
     width: 92%;
@@ -1272,47 +1188,48 @@ body {
     text-align: center;
   }
 
-  /* GALLERY */
-
-  .gallery-grid {
-    grid-template-columns: 1fr;
-
-    gap: 15px;
-  }
-
-  .gallery-grid img {
-    height: 300px;
-  }
 
   /* RSVP */
 
-  .rsvp {
+  .rsvp-card {
     width: 92%;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+    padding: 38px 20px;
   }
 
-  /* CLOSING */
-
-  .closing h2 {
-    font-size: 27px;
+  .rsvp-card h2 {
+    font-size: 30px;
   }
 
-  /* LIGHTBOX */
+  .guest-message-form input,
+  .guest-message-form textarea {
+    font-size: 13px;
+  }
 
-  .photo-lightbox {
+  .guest-message {
     padding: 15px;
   }
 
-  .photo-lightbox img {
-    max-width: 95%;
 
-    max-height: 82vh;
+  /* CLOSING */
+
+  .closing-content h2 {
+    font-size: 27px;
+    line-height: 1.6;
   }
 
-  .close-photo {
-    top: 15px;
+  .closing-content p {
+    font-size: 14px;
+  }
+
+  .closing-background {
+    background-position: center center;
+  }
+
+
+  /* MUSIC */
+
+  .music-button {
     right: 15px;
+    bottom: 15px;
   }
 }

@@ -3,10 +3,22 @@ import "./App.css"
 
 function App() {
   const [open, setOpen] = useState(false)
-  const [selectedPhoto, setSelectedPhoto] = useState(null)
   const [musicPlaying, setMusicPlaying] = useState(false)
 
+  const [guestMessage, setGuestMessage] = useState("")
+
+  const [guestMessages, setGuestMessages] = useState(() => {
+    try {
+      return JSON.parse(
+        localStorage.getItem("weddingMessages") || "[]"
+      )
+    } catch {
+      return []
+    }
+  })
+
   const params = new URLSearchParams(window.location.search)
+
   const guestName =
     params.get("to") || "Bapak/Ibu/Saudara/i"
 
@@ -17,7 +29,10 @@ function App() {
     seconds: 0,
   })
 
+  // ==================================================
   // COUNTDOWN
+  // ==================================================
+
   useEffect(() => {
     const targetDate = new Date(
       "2026-10-17T09:00:00+07:00"
@@ -55,12 +70,18 @@ function App() {
 
     updateCountdown()
 
-    const timer = setInterval(updateCountdown, 1000)
+    const timer = setInterval(
+      updateCountdown,
+      1000
+    )
 
     return () => clearInterval(timer)
   }, [])
 
+  // ==================================================
   // SCROLL ANIMATION
+  // ==================================================
+
   useEffect(() => {
     if (!open) return
 
@@ -88,31 +109,18 @@ function App() {
     return () => observer.disconnect()
   }, [open])
 
-  // CLOSE PHOTO WITH ESC
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        setSelectedPhoto(null)
-      }
-    }
+  // ==================================================
+  // OPEN INVITATION + MUSIC
+  // ==================================================
 
-    window.addEventListener("keydown", handleKeyDown)
-
-    return () => {
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown
-      )
-    }
-  }, [])
-
-  // OPEN INVITATION + PLAY MUSIC
   const openInvitation = () => {
     setOpen(true)
 
     setTimeout(() => {
       const music =
-        document.getElementById("wedding-music")
+        document.getElementById(
+          "wedding-music"
+        )
 
       if (music) {
         music
@@ -127,10 +135,15 @@ function App() {
     }, 100)
   }
 
+  // ==================================================
   // TOGGLE MUSIC
+  // ==================================================
+
   const toggleMusic = () => {
     const music =
-      document.getElementById("wedding-music")
+      document.getElementById(
+        "wedding-music"
+      )
 
     if (!music) return
 
@@ -149,16 +162,71 @@ function App() {
     }
   }
 
+  // ==================================================
+  // KIRIM UCAPAN
+  // ==================================================
+
+  const submitGuestMessage = (event) => {
+    event.preventDefault()
+
+    if (!guestMessage.trim()) {
+      return
+    }
+
+    const newMessage = {
+      name: guestName,
+      message: guestMessage.trim(),
+    }
+
+    const updatedMessages = [
+      ...guestMessages,
+      newMessage,
+    ]
+
+    setGuestMessages(updatedMessages)
+
+    localStorage.setItem(
+      "weddingMessages",
+      JSON.stringify(updatedMessages)
+    )
+
+    setGuestMessage("")
+  }
+
+  // ==================================================
+  // ISI UNDANGAN
+  // ==================================================
+
   if (open) {
     return (
       <main className="content">
-        <div className="floating-flower flower-1">❀</div>
-        <div className="floating-flower flower-2">✿</div>
-        <div className="floating-flower flower-3">❀</div>
-        <div className="floating-flower flower-4">✿</div>
 
-        <audio id="wedding-music" loop>
-          <source src="/lagu.mp3" type="audio/mpeg" />
+        {/* FLOWER */}
+        <div className="floating-flower flower-1">
+          ❀
+        </div>
+
+        <div className="floating-flower flower-2">
+          ✿
+        </div>
+
+        <div className="floating-flower flower-3">
+          ❀
+        </div>
+
+        <div className="floating-flower flower-4">
+          ✿
+        </div>
+
+        {/* MUSIC */}
+        <audio
+          id="wedding-music"
+          loop
+        >
+          <source
+            src="/lagu.mp3"
+            type="audio/mpeg"
+          />
         </audio>
 
         <button
@@ -173,14 +241,20 @@ function App() {
           {musicPlaying ? "🎵" : "🔇"}
         </button>
 
-        {/* SLIDE 1 - R & S + NAMA + TANGGAL */}
+        {/* ==================================================
+            SLIDE 1 - R & S
+        ================================================== */}
+
         <section className="full-screen-section intro-section animate-on-scroll">
+
           <div className="intro-card">
+
             <div className="initials">
               R <span>&</span> S
             </div>
 
             <div className="intro-names">
+
               <div>
                 <p>
                   Rossyana Dewi
@@ -198,27 +272,38 @@ function App() {
                   Zhaafir Satrio
                 </p>
               </div>
+
             </div>
 
             <div className="intro-date">
               17 Oktober 2026
             </div>
+
           </div>
+
         </section>
 
-        {/* SLIDE 2 - DOA */}
+        {/* ==================================================
+            SLIDE 2 - DOA
+        ================================================== */}
+
         <section className="full-screen-section wedding-verse-section animate-on-scroll">
+
           <div className="wedding-verse">
+
             <div className="verse-divider">
               ❦
             </div>
 
             <p className="verse-text">
-              “Dan di antara tanda-tanda kebesaran-Nya,
+              “Dan di antara tanda-tanda
+              kebesaran-Nya,
               <br />
-              Dia menciptakan pasangan agar kamu memperoleh
+              Dia menciptakan pasangan agar
+              kamu memperoleh
               <br />
-              ketenteraman, dan Dia menjadikan di antara kamu
+              ketenteraman, dan Dia menjadikan
+              di antara kamu
               <br />
               rasa kasih dan sayang.”
             </p>
@@ -226,12 +311,20 @@ function App() {
             <span className="verse-reference">
               — QS. Ar-Rum: 21
             </span>
+
           </div>
+
         </section>
 
-        {/* SLIDE 3 - BRIDE */}
+        {/* ==================================================
+            SLIDE 3 - BRIDE
+        ================================================== */}
+
         <section className="full-screen-section couple-section animate-on-scroll">
-          <p className="small-title">THE BRIDE</p>
+
+          <p className="small-title">
+            THE BRIDE
+          </p>
 
           <img
             src="/foto-cewe.jpeg"
@@ -239,18 +332,38 @@ function App() {
             className="couple-photo"
           />
 
-          <h1>Rossyana Dewi Gustriandini</h1>
+          <h1>
+            Rossyana Dewi Gustriandini
+          </h1>
 
           <p>
-            Putri dari Bapak R.E Wijaya Mulyana dan
+            Putri dari Bapak R.E Wijaya Mulyana
+            dan
             <br />
             Ibu Euis Fitri Rosdiany R
           </p>
+
         </section>
 
-        {/* SLIDE 4 - GROOM */}
+        {/* ==================================================
+            AMPERSAND
+        ================================================== */}
+
+        <section className="ampersand-between animate-on-scroll">
+          <div className="and">
+            &
+          </div>
+        </section>
+
+        {/* ==================================================
+            SLIDE 4 - GROOM
+        ================================================== */}
+
         <section className="full-screen-section couple-section animate-on-scroll">
-          <p className="small-title">THE GROOM</p>
+
+          <p className="small-title">
+            THE GROOM
+          </p>
 
           <img
             src="/foto-cowo.jpeg"
@@ -258,66 +371,115 @@ function App() {
             className="couple-photo"
           />
 
-          <h1>Muhamad Salman Zhaafir Satrio</h1>
+          <h1>
+            Muhamad Salman Zhaafir Satrio
+          </h1>
 
           <p>
             Putra dari Bapak Heriyanto dan
             <br />
             Ibu Sri Ratnawati
           </p>
+
         </section>
 
-        {/* SLIDE 5 - COUPLE */}
-        <section className="full-screen-section couple-together animate-on-scroll">
-          <div className="and">&</div>
+        {/* ==================================================
+            SLIDE 5 - COUPLE
+        ================================================== */}
 
-          <p>
-            Dengan penuh kebahagiaan,
-            <br />
-            kami akan melangsungkan pernikahan.
-          </p>
+        <section className="full-screen-section couple-together animate-on-scroll">
 
           <div className="line"></div>
 
-          <p className="wedding-date">
+        </section>
+
+        {/* ==================================================
+            SLIDE 6 - COUNTDOWN
+        ================================================== */}
+
+        <section className="full-screen-section countdown countdown-background animate-on-scroll">
+
+          <div className="countdown-overlay"></div>
+
+          <div className="countdown-content">
+
+            <p className="countdown-subtitle">
+              Dengan penuh kebahagiaan
+            </p>
+
+            <h2>
+              Menuju Hari Bahagia
+            </h2>
+
+            <p className="countdown-date">
+              Sabtu, 17 Oktober 2026
+            </p>
+
+            <div className="countdown-grid">
+
+              <div>
+                <strong>
+                  {timeLeft.days}
+                </strong>
+
+                <span>
+                  HARI
+                </span>
+              </div>
+
+              <div>
+                <strong>
+                  {timeLeft.hours}
+                </strong>
+
+                <span>
+                  JAM
+                </span>
+              </div>
+
+              <div>
+                <strong>
+                  {timeLeft.minutes}
+                </strong>
+
+                <span>
+                  MENIT
+                </span>
+              </div>
+
+              <div>
+                <strong>
+                  {timeLeft.seconds}
+                </strong>
+
+                <span>
+                  DETIK
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* ==================================================
+            SLIDE 7 - EVENT
+        ================================================== */}
+
+        <section className="full-screen-section event animate-on-scroll">
+
+          <h2>
+            Acara
+          </h2>
+
+          <p>
             Sabtu, 17 Oktober 2026
           </p>
-        </section>
 
-        {/* SLIDE 6 - COUNTDOWN */}
-        <section className="full-screen-section countdown animate-on-scroll">
-          <h2>Menuju Hari Bahagia</h2>
-
-          <div className="countdown-grid">
-            <div>
-              <strong>{timeLeft.days}</strong>
-              <span>HARI</span>
-            </div>
-
-            <div>
-              <strong>{timeLeft.hours}</strong>
-              <span>JAM</span>
-            </div>
-
-            <div>
-              <strong>{timeLeft.minutes}</strong>
-              <span>MENIT</span>
-            </div>
-
-            <div>
-              <strong>{timeLeft.seconds}</strong>
-              <span>DETIK</span>
-            </div>
-          </div>
-        </section>
-
-        {/* SLIDE 7 - EVENT */}
-        <section className="full-screen-section event animate-on-scroll">
-          <h2>Acara</h2>
-
-          <p>Sabtu, 17 Oktober 2026</p>
-
-          <p>09.00 WIB – 11.30 WIB</p>
+          <p>
+            09.00 WIB – 11.30 WIB
+          </p>
 
           <p>
             Komplek Gading Tutuka 1
@@ -334,110 +496,138 @@ function App() {
           >
             LIHAT LOKASI
           </a>
+
         </section>
 
-        {/* SLIDE 8 - GALLERY */}
-        <section className="full-screen-section gallery animate-on-scroll">
-          <h2>Our Moments</h2>
+        {/* ==================================================
+            SLIDE 8 - KONFIRMASI & UCAPAN
+        ================================================== */}
 
-          <div className="gallery-grid">
-            <img
-              src="/foto1.jpeg"
-              alt="Momen 1"
-              onClick={() =>
-                setSelectedPhoto("/foto1.jpeg")
-              }
-            />
-
-            <img
-              src="/foto2.jpeg"
-              alt="Momen 2"
-              onClick={() =>
-                setSelectedPhoto("/foto2.jpeg")
-              }
-            />
-
-            <img
-              src="/foto3.jpeg"
-              alt="Momen 3"
-              onClick={() =>
-                setSelectedPhoto("/foto3.jpeg")
-              }
-            />
-          </div>
-        </section>
-
-        {selectedPhoto && (
-          <div
-            className="photo-lightbox"
-            onClick={() => setSelectedPhoto(null)}
-          >
-            <button
-              className="close-photo"
-              onClick={(event) => {
-                event.stopPropagation()
-                setSelectedPhoto(null)
-              }}
-            >
-              ✕
-            </button>
-
-            <img
-              src={selectedPhoto}
-              alt="Foto diperbesar"
-              onClick={(event) =>
-                event.stopPropagation()
-              }
-            />
-          </div>
-        )}
-
-        {/* SLIDE 9 - RSVP */}
         <section className="full-screen-section rsvp animate-on-scroll">
-          <h2>Konfirmasi Kehadiran</h2>
 
-          <p>
-            Mohon konfirmasi kehadiran Anda
-            <br />
-            melalui WhatsApp.
-          </p>
+          <div className="rsvp-card">
 
-          <a
-            href="https://wa.me/6289655462992?text=Halo%20saya%20akan%20hadir%20di%20acara%20Muhamad%20Salman%20Zhaafir%20Satrio%20dan%20Rossyana%20Dewi%20Gustriandini"
-            target="_blank"
-            rel="noreferrer"
-          >
-            KONFIRMASI VIA WHATSAPP
-          </a>
+            <p className="rsvp-small-title">
+              KONFIRMASI KEHADIRAN
+            </p>
+
+            <h2>
+              Dear Muhamad Salman
+              <br />
+              & Rossyana Dewi
+            </h2>
+
+            <form
+              className="guest-message-form"
+              onSubmit={submitGuestMessage}
+            >
+
+              <input
+                type="text"
+                value={guestName}
+                readOnly
+                placeholder="Nama Anda"
+              />
+
+              <textarea
+                value={guestMessage}
+                onChange={(event) =>
+                  setGuestMessage(
+                    event.target.value
+                  )
+                }
+                placeholder="Tulis ucapan untuk mempelai..."
+                rows="4"
+              />
+
+              <button type="submit">
+                KIRIM KONFIRMASI
+              </button>
+
+            </form>
+
+            <div className="guest-messages">
+
+              <h3>
+                Ucapan & Doa
+              </h3>
+
+              {guestMessages.length === 0 ? (
+                <p className="no-message">
+                  Belum ada ucapan.
+                </p>
+              ) : (
+                guestMessages.map(
+                  (item, index) => (
+                    <div
+                      className="guest-message"
+                      key={index}
+                    >
+
+                      <strong>
+                        {item.name}
+                      </strong>
+
+                      <p>
+                        {item.message}
+                      </p>
+
+                    </div>
+                  )
+                )
+              )}
+
+            </div>
+
+          </div>
+
         </section>
 
-        {/* SLIDE 10 - CLOSING */}
-        <section className="full-screen-section closing animate-on-scroll">
-          <p>
-            Terima kasih atas doa dan kehadiran
-            <br />
-            di hari bahagia kami.
-          </p>
+        {/* ==================================================
+            SLIDE 9 - CLOSING
+        ================================================== */}
 
-          <h2>
-            Muhamad Salman Zhaafir Satrio
-            <br />
-            &
-            <br />
-            Rossyana Dewi Gustriandini
-          </h2>
+        <section className="full-screen-section closing closing-background animate-on-scroll">
 
-          <p className="closing-date">
-            17 Oktober 2026
-          </p>
+          <div className="closing-overlay"></div>
+
+          <div className="closing-content">
+
+            <p>
+              Terima kasih atas doa dan kehadiran
+              <br />
+              di hari bahagia kami.
+            </p>
+
+            <h2>
+              Muhamad Salman Zhaafir Satrio
+              <br />
+              &
+              <br />
+              Rossyana Dewi Gustriandini
+            </h2>
+
+            <p className="closing-date">
+              17 Oktober 2026
+            </p>
+
+          </div>
+
         </section>
+
       </main>
     )
   }
 
+  // ==================================================
+  // COVER DEPAN
+  // ==================================================
+
   return (
     <main className="cover">
+
       <div className="cover-card">
+
         <p className="small-title">
           THE WEDDING OF
         </p>
@@ -478,10 +668,14 @@ function App() {
           di acara istimewa kami.
         </p>
 
-        <button onClick={openInvitation}>
+        <button
+          onClick={openInvitation}
+        >
           BUKA UNDANGAN
         </button>
+
       </div>
+
     </main>
   )
 }
