@@ -1,21 +1,13 @@
 import { useEffect, useState } from "react"
 import "./App.css"
+import { supabase } from "./supabaseClient"
 
 function App() {
   const [open, setOpen] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(false)
 
   const [guestMessage, setGuestMessage] = useState("")
-
-  const [guestMessages, setGuestMessages] = useState(() => {
-    try {
-      return JSON.parse(
-        localStorage.getItem("weddingMessages") || "[]"
-      )
-    } catch {
-      return []
-    }
-  })
+  const [guestMessages, setGuestMessages] = useState([])
 
   const params = new URLSearchParams(window.location.search)
 
@@ -29,9 +21,23 @@ function App() {
     seconds: 0,
   })
 
-  // ==================================================
-  // COUNTDOWN
-  // ==================================================
+  useEffect(() => {
+    const loadGuestMessages = async () => {
+      const { data, error } = await supabase
+        .from("guest_messages")
+        .select("id, name, message, created_at")
+        .order("created_at", { ascending: false })
+
+      if (error) {
+        console.error("Gagal mengambil ucapan:", error)
+        return
+      }
+
+      setGuestMessages(data || [])
+    }
+
+    loadGuestMessages()
+  }, [])
 
   useEffect(() => {
     const targetDate = new Date(
@@ -78,10 +84,6 @@ function App() {
     return () => clearInterval(timer)
   }, [])
 
-  // ==================================================
-  // SCROLL ANIMATION
-  // ==================================================
-
   useEffect(() => {
     if (!open) return
 
@@ -109,10 +111,6 @@ function App() {
     return () => observer.disconnect()
   }, [open])
 
-  // ==================================================
-  // OPEN INVITATION + MUSIC
-  // ==================================================
-
   const openInvitation = () => {
     setOpen(true)
 
@@ -134,10 +132,6 @@ function App() {
       }
     }, 100)
   }
-
-  // ==================================================
-  // TOGGLE MUSIC
-  // ==================================================
 
   const toggleMusic = () => {
     const music =
@@ -162,11 +156,7 @@ function App() {
     }
   }
 
-  // ==================================================
-  // KIRIM UCAPAN
-  // ==================================================
-
-  const submitGuestMessage = (event) => {
+  const submitGuestMessage = async (event) => {
     event.preventDefault()
 
     if (!guestMessage.trim()) {
@@ -178,30 +168,36 @@ function App() {
       message: guestMessage.trim(),
     }
 
-    const updatedMessages = [
-      ...guestMessages,
-      newMessage,
-    ]
+    const { data, error } = await supabase
+      .from("guest_messages")
+      .insert(newMessage)
+      .select("id, name, message, created_at")
+      .single()
 
-    setGuestMessages(updatedMessages)
+    if (error) {
+      console.error("SUPABASE ERROR:", error)
 
-    localStorage.setItem(
-      "weddingMessages",
-      JSON.stringify(updatedMessages)
-    )
+      alert(
+        `Ucapan gagal dikirim.\n\nError: ${error.message}`
+      )
+
+      return
+    }
+
+    setGuestMessages((currentMessages) => [
+      data,
+      ...currentMessages,
+    ])
 
     setGuestMessage("")
-  }
 
-  // ==================================================
-  // ISI UNDANGAN
-  // ==================================================
+    alert("Ucapan berhasil dikirim!")
+  }
 
   if (open) {
     return (
       <main className="content">
 
-        {/* FLOWER */}
         <div className="floating-flower flower-1">
           ❀
         </div>
@@ -218,7 +214,6 @@ function App() {
           ✿
         </div>
 
-        {/* MUSIC */}
         <audio
           id="wedding-music"
           loop
@@ -241,9 +236,7 @@ function App() {
           {musicPlaying ? "🎵" : "🔇"}
         </button>
 
-        {/* ==================================================
-            SLIDE 1 - R & S
-        ================================================== */}
+        {/* INTRO */}
 
         <section className="full-screen-section intro-section animate-on-scroll">
 
@@ -283,9 +276,7 @@ function App() {
 
         </section>
 
-        {/* ==================================================
-            SLIDE 2 - DOA
-        ================================================== */}
+        {/* AYAT */}
 
         <section className="full-screen-section wedding-verse-section animate-on-scroll">
 
@@ -316,9 +307,7 @@ function App() {
 
         </section>
 
-        {/* ==================================================
-            SLIDE 3 - BRIDE
-        ================================================== */}
+        {/* BRIDE */}
 
         <section className="full-screen-section couple-section animate-on-scroll">
 
@@ -345,19 +334,17 @@ function App() {
 
         </section>
 
-        {/* ==================================================
-            AMPERSAND
-        ================================================== */}
+        {/* AMPERSAND */}
 
         <section className="ampersand-between animate-on-scroll">
+
           <div className="and">
             &
           </div>
+
         </section>
 
-        {/* ==================================================
-            SLIDE 4 - GROOM
-        ================================================== */}
+        {/* GROOM */}
 
         <section className="full-screen-section couple-section animate-on-scroll">
 
@@ -383,19 +370,7 @@ function App() {
 
         </section>
 
-        {/* ==================================================
-            SLIDE 5 - COUPLE
-        ================================================== */}
-
-        <section className="full-screen-section couple-together animate-on-scroll">
-
-          <div className="line"></div>
-
-        </section>
-
-        {/* ==================================================
-            SLIDE 6 - COUNTDOWN
-        ================================================== */}
+        {/* COUNTDOWN */}
 
         <section className="full-screen-section countdown countdown-background animate-on-scroll">
 
@@ -463,9 +438,7 @@ function App() {
 
         </section>
 
-        {/* ==================================================
-            SLIDE 7 - EVENT
-        ================================================== */}
+        {/* ACARA */}
 
         <section className="full-screen-section event animate-on-scroll">
 
@@ -499,9 +472,7 @@ function App() {
 
         </section>
 
-        {/* ==================================================
-            SLIDE 8 - KONFIRMASI & UCAPAN
-        ================================================== */}
+        {/* RSVP */}
 
         <section className="full-screen-section rsvp animate-on-scroll">
 
@@ -558,10 +529,10 @@ function App() {
                 </p>
               ) : (
                 guestMessages.map(
-                  (item, index) => (
+                  (item) => (
                     <div
                       className="guest-message"
-                      key={index}
+                      key={item.id}
                     >
 
                       <strong>
@@ -583,9 +554,7 @@ function App() {
 
         </section>
 
-        {/* ==================================================
-            SLIDE 9 - CLOSING
-        ================================================== */}
+        {/* PENUTUP */}
 
         <section className="full-screen-section closing closing-background animate-on-scroll">
 
@@ -619,9 +588,7 @@ function App() {
     )
   }
 
-  // ==================================================
-  // COVER DEPAN
-  // ==================================================
+  {/* COVER */}
 
   return (
     <main className="cover">
